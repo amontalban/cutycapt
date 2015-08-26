@@ -1,0 +1,23 @@
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install build-essential
+  - sudo apt-get -y install debhelper
+  - sudo apt-get -y install qt5-default
+  - sudo apt-get -y install libqt5webkit5-dev
+  - sudo apt-get -y install qt5-qmake
+  - sudo apt-get -y install libqt5svg5-dev
+  - sudo apt-get -y install dos2unix
+  - sudo apt-get -y install git
+  - sudo apt-get -y install subversion
+install:
+  - mkdir ~/build && cd ~/build
+  - git clone git@github.com:amontalban/cutycapt-wheezy.git
+  - cd cutycapt-wheezy
+  - sh debian/rules get-orig-source
+  - mv cutycapt*.tar.gz ~/build
+  - dpkg-buildpackage -us -uc
+deploy:
+  provider: packagecloud
+  repository: "amontalban/cutycapt"
+  username: "amontalban"
+  dist: "debian/wheezy"
