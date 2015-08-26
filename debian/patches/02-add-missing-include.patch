@@ -1,0 +1,15 @@
+Description: Add missing #include to fix FTBFS.
+Forwarded: no
+Author: Julián Moreno Patiño <julian@debian.org>
+Last-Update: 2014-09-09
+
+--- a/CutyCapt.cpp	2015-08-26 19:17:39.342434970 +0000
++++ b/CutyCapt.cpp	2015-08-26 19:17:55.578434269 +0000
+@@ -34,6 +34,7 @@
+
+ #include <QTimer>
+ #include <QByteArray>
++#include <QNetworkProxyFactory>
+ #include <QNetworkRequest>
+ #include <QNetworkProxy>
+ #include "CutyCapt.hpp"

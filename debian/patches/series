@@ -1,0 +1,3 @@
+01-assume_http_as_default.patch
+02-add-missing-include.patch
+03-fix-printer-support.patch

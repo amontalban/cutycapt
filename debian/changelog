@@ -1,0 +1,36 @@
+cutycapt (0.0~svn10-1) unstable; urgency=medium
+
+  * Upgrade package to latest SVN version (r10).
+  * Refresh 01-assume_http_as_default.patch.
+  * Refresh 02-add-missing-include.patch.
+  * Add patch to fix missing header (03-fix-printer-support.patch).
+
+ -- Andrés Montalbán <amontalban@gmail.com>  Wed, 26 Aug 2015 17:16:38 -0300
+
+cutycapt (0.0~svn6-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add patch to fix FTBFS. (Closes: #601808)
+  * Refresh 01-assume_http_as_default.patch.
+
+ -- Julián Moreno Patiño <julian@debian.org>  Tue, 09 Sep 2014 15:07:53 -0500
+
+cutycapt (0.0~svn6-3) unstable; urgency=low
+
+  * Add Build-Depends on libqtwebkit-dev (Closes: #618240)
+
+ -- David Paleino <dapal@debian.org>  Sun, 13 Mar 2011 19:08:07 +0100
+
+cutycapt (0.0~svn6-2) unstable; urgency=low
+
+  * Assume http if no scheme is given on the command line
+    (01-assume_http_as_default.patch) (Closes: #611900)
+  * Bump Standards-Version to 3.9.1, no changes needed
+
+ -- David Paleino <dapal@debian.org>  Tue, 01 Mar 2011 12:55:57 +0100
+
+cutycapt (0.0~svn6-1) unstable; urgency=low
+
+  * Initial release (Closes: #587446)
+
+ -- David Paleino <dapal@debian.org>  Mon, 28 Jun 2010 21:22:28 +0200

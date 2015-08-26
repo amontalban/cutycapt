@@ -1,0 +1,31 @@
+Description: Add missing #include for printer (https://gist.github.com/arndo/c629eac09d7137e281ff)
+Forwarded: no
+Author: https://github.com/arndo
+Last-Update: 2015-08-26
+
+--- a/CutyCapt.cpp	2015-08-26 19:19:00.000000000 +0000
++++ b/CutyCapt.cpp	2015-08-26 19:24:54.638434008 +0000
+@@ -27,11 +27,7 @@
+ #include <QtWebKit>
+ #include <QtGui>
+ #include <QSvgGenerator>
+-
+-#if QT_VERSION < 0x050000
+ #include <QPrinter>
+-#endif
+-
+ #include <QTimer>
+ #include <QByteArray>
+ #include <QNetworkProxyFactory>
+
+--- a/CutyCapt.pro	2015-08-26 17:47:58.778434497 +0000
++++ b/CutyCapt.pro	2015-08-26 19:25:19.354434529 +0000
+@@ -4,7 +4,7 @@
+ CONFIG   +=  qt console
+
+ greaterThan(QT_MAJOR_VERSION, 4): {
+-  QT       +=  webkitwidgets
++  QT       +=  webkitwidgets printsupport
+ }
+
+ contains(CONFIG, static): {

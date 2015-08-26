@@ -1,0 +1,66 @@
+From: David Paleino <dapal@debian.org>
+Subject: if no scheme is present, assume http
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=611900
+Forwarded: no
+
+--- a/CutyCapt.cpp	2015-08-26 19:16:29.730435130 +0000
++++ b/CutyCapt.cpp	2015-08-26 19:17:39.342434970 +0000
+@@ -408,7 +408,7 @@
+   int argVerbosity = 0;
+   int argSmooth = 0;
+
+-  const char* argUrl = NULL;
++  QByteArray argUrl = NULL;
+   const char* argUserStyle = NULL;
+   const char* argUserStylePath = NULL;
+   const char* argUserStyleString = NULL;
+@@ -416,6 +416,7 @@
+   const char* argInjectScript = NULL;
+   const char* argScriptObject = NULL;
+   QString argOut;
++  QUrl parsedUrl;
+
+   CutyCapt::OutputFormat format = CutyCapt::OtherFormat;
+
+@@ -477,7 +478,7 @@
+
+     // --name=value options
+     if (strncmp("--url", s, nlen) == 0) {
+-      argUrl = value;
++      argUrl = QByteArray(value);
+
+     } else if (strncmp("--min-width", s, nlen) == 0) {
+       // TODO: add error checking here?
+@@ -496,7 +497,7 @@
+       argMaxWait = (unsigned int)atoi(value);
+
+     } else if (strncmp("--out", s, nlen) == 0) {
+-      argOut = value;
++      argOut = QByteArray(value);
+
+       if (format == CutyCapt::OtherFormat)
+         for (int ix = 0; CutyExtMap[ix].id != CutyCapt::OtherFormat; ++ix)
+@@ -627,14 +628,21 @@
+     }
+   }
+
+-  if (argUrl == NULL || argOut == NULL || argHelp) {
++  if (argUrl.isNull() || argOut == NULL || argHelp) {
+       CaptHelp();
+       return EXIT_FAILURE;
+   }
+
++  // Check if a scheme is present, if not, assume http.
++  parsedUrl = QUrl::fromEncoded(argUrl);
++  if (parsedUrl.scheme() == "") {
++      argUrl = "http://" + argUrl;
++      parsedUrl = QUrl::fromEncoded(argUrl);
++  }
++
+   // This used to use QUrl(argUrl) but that escapes %hh sequences
+   // even though it should not, as URLs can assumed to be escaped.
+-  req.setUrl( QUrl::fromEncoded(argUrl) );
++  req.setUrl(parsedUrl);
+
+   QString scriptProp(argScriptObject);
+   QString scriptCode;
