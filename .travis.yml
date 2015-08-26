@@ -2,10 +2,10 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install build-essential
   - sudo apt-get -y install debhelper
-  - sudo apt-get -y install qt5-default
-  - sudo apt-get -y install libqt5webkit5-dev
-  - sudo apt-get -y install qt5-qmake
-  - sudo apt-get -y install libqt5svg5-dev
+  - sudo apt-get -y install -t wheezy-backports qt5-default
+  - sudo apt-get -y install -t wheezy-backports libqt5webkit5-dev
+  - sudo apt-get -y install -t wheezy-backports qt5-qmake
+  - sudo apt-get -y install -t wheezy-backports libqt5svg5-dev
   - sudo apt-get -y install dos2unix
   - sudo apt-get -y install git
   - sudo apt-get -y install subversion
