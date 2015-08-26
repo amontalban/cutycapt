@@ -1,8 +1,6 @@
 before_install:
-  - cat > /etc/apt/sources.list.d/backports.list << EOF
-  deb http://http.debian.net/debian wheezy-backports main
-  deb-src http://http.debian.net/debian wheezy-backports main
-  EOF
+  - echo "deb http://http.debian.net/debian wheezy-backports main" > /etc/apt/sources.list.d/backports.list
+  - echo "deb-src http://http.debian.net/debian wheezy-backports main" >> /etc/apt/sources.list.d/backports.list
   - sudo apt-get update
   - sudo apt-get -y install build-essential
   - sudo apt-get -y install debhelper
