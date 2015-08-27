@@ -1,23 +1,24 @@
+language: python
+python:
+ - "2.7"
 before_install:
-  - sudo -E sh -c 'echo "deb http://http.debian.net/debian wheezy-backports main" > /etc/apt/sources.list.d/backports.list'
-  - sudo -E sh -c 'echo "deb-src http://http.debian.net/debian wheezy-backports main" >> /etc/apt/sources.list.d/backports.list'
-  - sudo apt-get update
-  - sudo apt-get -y install build-essential
-  - sudo apt-get -y install debhelper
-  - sudo apt-get -y install -t wheezy-backports qt5-default
-  - sudo apt-get -y install -t wheezy-backports libqt5webkit5-dev
-  - sudo apt-get -y install -t wheezy-backports qt5-qmake
-  - sudo apt-get -y install -t wheezy-backports libqt5svg5-dev
-  - sudo apt-get -y install dos2unix
-  - sudo apt-get -y install git
-  - sudo apt-get -y install subversion
+  - export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  # Install build tools
+  - sudo apt-get -y install subversion pbuilder debootstrap devscripts debian-archive-keyring dos2unix
+  # Create a pbuilder chroot
+  - sudo pbuilder create --distribution wheezy --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg" --mirror http://httpredir.debian.org/debian/
+  # Before building, add a hook to run lintian and add backports mirrors
+  - sudo mkdir ~/pbuilderhooks
+  - sudo cp /usr/share/doc/pbuilder/examples/B90lintian $HOME/pbuilderhooks
+  - sudo -E sh -c "echo \"HOOKDIR=$HOME/pbuilderhooks/\" >> ~/.pbuilderrc"
+  - sudo -E sh -c "echo 'OTHERMIRROR=\"deb http://httpredir.debian.org/debian wheezy-backports main\"' >> ~/.pbuilderrc"
+  # Make sure get-orig-source works
+  - sudo debian/rules get-orig-source
+  # Move sources to proper place
+  - sudo mv cutycapt*.tar.gz ~/amontalban
 install:
-  - mkdir ~/build && cd ~/build
-  - git clone git@github.com:amontalban/cutycapt-wheezy.git
-  - cd cutycapt-wheezy
-  - sh debian/rules get-orig-source
-  - mv cutycapt*.tar.gz ~/build
-  - dpkg-buildpackage -us -uc
+  # Build the package
+  - sudo pdebuild
 deploy:
   provider: packagecloud
   repository: "amontalban/cutycapt"
