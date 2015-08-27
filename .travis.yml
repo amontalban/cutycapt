@@ -3,7 +3,8 @@ python:
  - "2.7"
 before_install:
   - export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-  # Install build tools
+  # Update packages repositories & install build tools
+  - sudo apt-get update
   - sudo apt-get -y install subversion pbuilder debootstrap devscripts debian-archive-keyring dos2unix
   # Create a pbuilder chroot
   - sudo pbuilder create --distribution wheezy --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg" --mirror http://httpredir.debian.org/debian/
