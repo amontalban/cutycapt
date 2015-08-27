@@ -6,8 +6,10 @@ before_install:
   # Update packages repositories & install build tools
   - sudo apt-get update
   - sudo apt-get -y install subversion pbuilder debootstrap devscripts debian-archive-keyring dos2unix
+  # Add Debian Wheezy Stable Release Key to keyring
+  - sudo gpg --no-default-keyring --keyring /usr/share/keyrings/debian-archive-keyring.gpg --keyserver keyserver.ubuntu.com --recv-keys 6FB2A1C265FFB764
   # Create a pbuilder chroot
-  - sudo pbuilder create --distribution wheezy --debootstrapopts "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg" --mirror http://httpredir.debian.org/debian/
+  - sudo pbuilder create --distribution wheezy --debootstrapopts --keyring=/usr/share/keyrings/debian-archive-keyring.gpg --mirror http://httpredir.debian.org/debian/
   # Before building, add a hook to run lintian and add backports mirrors
   - sudo mkdir ~/pbuilderhooks
   - sudo cp /usr/share/doc/pbuilder/examples/B90lintian $HOME/pbuilderhooks
